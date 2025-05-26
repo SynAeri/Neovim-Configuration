@@ -1,21 +1,21 @@
-toggTerm = require('toggleterm')
-
-toggTerm.setup({
-  size = 15,
-  open_mapping = [[<C-\>]],
-  shade_terminals = true,
-  shading_factor = 2,
-  direction = "horizontal", -- "vertical" | "float" | "tab"
-  start_in_insert = true,
-  insert_mappings = true,
-  persist_size = true,
-  close_on_exit = true,
-  shell = vim.o.shell, -- Respect whatever shell you’re using
-})
-
-vim.api.nvim_buf_set_keymap(0, 't', '<esc>', [[<C-\><C-n>]], opts)
-vim.api.nvim_buf_set_keymap(0, 't', 'jk', [[<C-\><C-n>]], opts)
-vim.api.nvim_buf_set_keymap(0, 't', '<C-h>', [[<C-\><C-n><C-W>h]], opts)
-vim.api.nvim_buf_set_keymap(0, 'n', '<C-j>', [[<C-\><C-n><C-W>j]], opts)
-vim.api.nvim_buf_set_keymap(0, 't', '<C-k>', [[<C-\><C-n><C-W>k]], opts)
-vim.api.nvim_buf_set_keymap(0, 't', '<C-l>', [[<C-\><C-n><C-W>l]], opts)
+-- toggTerm = require('toggleterm')
+-- 
+-- toggTerm.setup({
+--   size = 15,
+--   open_mapping = [[<C-\>]],
+--   shade_terminals = true,
+--   shading_factor = 2,
+--   direction = "horizontal", -- "vertical" | "float" | "tab"
+--   start_in_insert = true,
+--   insert_mappings = true,
+--   persist_size = true,
+--   close_on_exit = true,
+--   shell = vim.o.shell, -- Respect whatever shell you’re using
+-- })
+-- 
+-- vim.api.nvim_buf_set_keymap(0, 't', '<esc>', [[<C-\><C-n>]], opts)
+-- vim.api.nvim_buf_set_keymap(0, 't', 'jk', [[<C-\><C-n>]], opts)
+-- vim.api.nvim_buf_set_keymap(0, 't', '<C-h>', [[<C-\><C-n><C-W>h]], opts)
+-- vim.api.nvim_buf_set_keymap(0, 'n', '<C-j>', [[<C-\><C-n><C-W>j]], opts)
+-- vim.api.nvim_buf_set_keymap(0, 't', '<C-k>', [[<C-\><C-n><C-W>k]], opts)
+-- vim.api.nvim_buf_set_keymap(0, 't', '<C-l>', [[<C-\><C-n><C-W>l]], opts)
