@@ -21,4 +21,7 @@ with pkgs.vimPlugins; [
 
   # AutoCompletion
   nvim-cmp
+  luasnip               # <-- snippet support
+  cmp_luasnip           # <-- snippet completions
+
 ]
