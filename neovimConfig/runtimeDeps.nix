@@ -3,6 +3,8 @@
 {
   deps1 = with pkgs; [
     nodePackages.typescript-language-server
+    nodePackages.typescript
+    lua-language-server
   ];
   deps2 = with pkgs; [ lazygit ];
 }
