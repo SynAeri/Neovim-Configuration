@@ -17,6 +17,7 @@ with pkgs.vimPlugins; [
   
   # Lsps
   nvim-lspconfig
+  cmp-nvim-lsp
 
   # AutoCompletion
   nvim-cmp
