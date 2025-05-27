@@ -6,3 +6,19 @@ nvim_lsp.ts_ls.setup({
 })
 nvim_lsp.lua_ls.setup({
 })
+
+-- Python
+nvim_lsp.pyright.setup({
+  capabilities = capabilities,
+})
+
+-- Nix
+nvim_lsp.nil_ls.setup({
+  capabilities = capabilities,
+})
+
+-- C/C++
+nvim_lsp.clangd.setup({
+  capabilities = capabilities,
+})
+
