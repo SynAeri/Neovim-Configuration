@@ -31,6 +31,5 @@ with pkgs.vimPlugins; [
   gitsigns-nvim
 
   # Compiling
-  overseer-nvim
-
+  compiler-nvim
 ]
