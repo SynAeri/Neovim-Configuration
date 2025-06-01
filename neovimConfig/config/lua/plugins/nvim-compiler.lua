@@ -1,7 +1,9 @@
 -- config/lua/compiler.lua
 require('compiler').setup()
 
--- Keymaps
-vim.keymap.set('n', '<F6>', '<cmd>CompilerOpen<cr>', { desc = "Open compiler" })
-vim.keymap.set('n', '<F7>', '<cmd>CompilerRedo<cr>', { desc = "Redo last action" })
-vim.keymap.set('n', '<S-F6>', '<cmd>CompilerToggleResults<cr>', { desc = "Toggle results" })
+
+-- Keybinds
+vim.keymap.set('n', '<leader>cc', '<cmd>CompilerOpen<cr>', { desc = "Open compiler" })
+vim.keymap.set('n', '<leader>cr', '<cmd>CompilerRedo<cr>', { desc = "Redo last compilation" })
+vim.keymap.set('n', '<leader>ct', '<cmd>CompilerToggleResults<cr>', { desc = "Toggle compiler results" })
+
