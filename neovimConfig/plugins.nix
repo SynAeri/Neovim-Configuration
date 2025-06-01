@@ -30,4 +30,7 @@ with pkgs.vimPlugins; [
   # Git Integrations
   gitsigns-nvim
 
+  # Compiling
+  overseer-nvim
+
 ]
