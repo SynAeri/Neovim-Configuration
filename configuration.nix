@@ -180,6 +180,9 @@
   environment.systemPackages = with pkgs; [
     # Editors
 #    neovim
+    
+    # HDMI matters
+    autorandr
 
     # SSH Sys
     openssh
