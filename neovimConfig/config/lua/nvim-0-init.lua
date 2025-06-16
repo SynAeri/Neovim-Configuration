@@ -1,4 +1,5 @@
 vim.g.mapleader  = " "
+vim.opt.clipboard = "unnamedplus"
 
 vim.api.nvim_create_autocmd("VimEnter", {
   callback = function()
