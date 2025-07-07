@@ -160,6 +160,16 @@
   programs.zsh.enable = true;
   programs.zsh.ohMyZsh.enable = true;
 
+  # TMUX
+  programs.tmux = {
+  enable = true;
+  clock24 = true;
+  plugins = with pkgs.tmuxPlugins; [
+    sensible
+    yank
+    prefix-highlight
+    ];
+  };
 
   # Fonts
   fonts.packages = with pkgs; [
@@ -234,6 +244,7 @@
     playerctl
     xdotool
     pulseaudio
+    obsidian
 
     # Docker
     pkgs.docker_27
@@ -301,6 +312,14 @@
   #   enableSSHSupport = true;
   # };
 
+  services.openssh = {
+  enable = true;
+  settings = {
+    PasswordAuthentication = true;  # You can disable this later and use keys
+    PermitRootLogin = "no";
+    };
+  };
+  networking.firewall.allowedTCPPorts = [ 22 ];
 
   # NEOVIM
 }

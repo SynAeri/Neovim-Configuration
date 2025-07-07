@@ -8,5 +8,7 @@
     description = "jordan maquiran";
     extraGroups = [ "networkmanager" "wheel" "audio" "input" "video" ];
     packages = with pkgs; [];
+    openssh.authorizedKeys.keys = [
+    ];
   };
 }
