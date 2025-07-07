@@ -93,7 +93,7 @@
   networking.hostName = "nixos";
   networking.networkmanager.enable = true;
   networking.nameservers = [ "1.1.1.1" "8.8.8.8" ];
-  networking.firewall.allowedTCPPorts = [ 3000 ];
+  networking.firewall.allowedTCPPorts = [ 3000, 22 ];
 
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   # networking.proxy.default = "http://user:password@proxy:port/";
@@ -319,7 +319,5 @@
     PermitRootLogin = "no";
     };
   };
-  networking.firewall.allowedTCPPorts = [ 22 ];
-
   # NEOVIM
 }
