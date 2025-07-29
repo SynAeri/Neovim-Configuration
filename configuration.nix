@@ -297,7 +297,7 @@
     nodejs # For Node 
     libgccjit # For C
     mono # For C#
-
+    zulu8 # Hopefully for Javac
     
     # Networking
     iw
