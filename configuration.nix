@@ -294,8 +294,9 @@
     sumneko-lua-language-server
     clang
     python3
-    nodejs
-    libgccjit
+    nodejs # For Node 
+    libgccjit # For C
+    mono # For C#
 
     
     # Networking
