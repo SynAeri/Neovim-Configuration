@@ -295,6 +295,8 @@
     clang
     python3
     nodejs
+    libgccjit
+
     
     # Networking
     iw
