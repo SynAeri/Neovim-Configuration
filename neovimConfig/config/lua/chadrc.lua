@@ -1,9 +1,20 @@
 -- config/lua/chadrc.lua
 local M = {}
 
+
+-- Function to load theme from external file
+local function load_theme()
+  local theme_file = vim.fn.stdpath("config") .. "/theme.lua"
+  if vim.fn.filereadable(theme_file) == 1 then
+    local theme_config = dofile(theme_file)
+    return theme_config.theme or "onedark"
+  end
+  return "onedark" -- default theme
+end
+
 -- Base46 configurations (theme should be here, not in ui)
 M.base46 = {
-  theme = "onedark", -- Theme should be in base46, not ui
+  theme = load_theme(), -- Theme should be in base46, not ui
   transparency = false,
   theme_toggle = { "onedark", "one_light" },
 }
