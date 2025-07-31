@@ -58,67 +58,6 @@ vim.api.nvim_create_user_command("ThemePicker", function()
     vim.notify("Theme picker not available", vim.log.levels.ERROR)
   end
 end, { desc = "Open theme picker with auto-save" })
-
--- Debug command to check current theme
-vim.api.nvim_create_user_command("ThemeDebug", function()
-  print("=== Theme Debug Info ===")
-  print("vim.g.nvchad_theme:", vim.g.nvchad_theme)
-  print("vim.g.base46_theme:", vim.g.base46_theme) 
-  print("vim.g.colors_name:", vim.g.colors_name)
-  
-  -- Check base46 cache
-  local cache_file = vim.g.base46_cache .. "colors"
-  if vim.fn.filereadable(cache_file) == 1 then
-    local ok, colors = pcall(dofile, cache_file)
-    if ok and colors then
-      print("base46 cache theme:", colors.theme or "not found")
-    end
-  end
-  
-  -- Check nvconfig
-  local ok, nvconfig = pcall(require, "nvconfig")
-  if ok and nvconfig.base46 then
-    print("nvconfig theme:", nvconfig.base46.theme)
-  end
-  
-  -- Check what theme file we have saved
-  local theme_file = vim.fn.stdpath("data") .. "/nvchad_theme.lua"
-  if vim.fn.filereadable(theme_file) == 1 then
-    local ok, saved = pcall(dofile, theme_file)
-    if ok and saved then
-      print("saved theme file:", saved.theme)
-    end
-  end
-end, { desc = "Debug current theme detection" })
-
--- Better manual save that prompts for theme name
-vim.api.nvim_create_user_command("SaveThemeAs", function()
-  -- Get list of available themes
-  local themes_ok, themes_module = pcall(require, "nvchad.themes")
-  if themes_ok and themes_module.get_themes then
-    local available_themes = themes_module.get_themes()
-    if available_themes then
-      vim.ui.select(available_themes, {
-        prompt = "Select theme to save:",
-      }, function(choice)
-        if choice then
-          save_theme_to_file(choice)
-        end
-      end)
-      return
-    end
-  end
-  
-  -- Fallback to input
-  vim.ui.input({
-    prompt = "Enter theme name to save: ",
-    default = "onedark"
-  }, function(input)
-    if input and input ~= "" then
-      save_theme_to_file(input)
-    end
-  end)
-end, { desc = "Save theme with selection" })
 vim.api.nvim_create_user_command("SaveTheme", function(opts)
   local theme_name = opts.args
   
