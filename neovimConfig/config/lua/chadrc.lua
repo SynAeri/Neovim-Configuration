@@ -1,7 +1,7 @@
 -- config/lua/chadrc.lua
 local M = {}
 
-base46 = {
+M.base46 = {
   theme = "onedark", -- default theme
   hl_add = {},
   hl_override = {},
