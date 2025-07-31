@@ -1,8 +1,21 @@
 -- config/lua/chadrc.lua
 local M = {}
 
+-- Function to load saved theme
+local function load_saved_theme()
+  local theme_file = vim.fn.stdpath("data") .. "/nvchad_theme.lua"
+  if vim.fn.filereadable(theme_file) == 1 then
+    local ok, theme_config = pcall(dofile, theme_file)
+    if ok and theme_config and theme_config.theme then
+      print("Loading saved theme: " .. theme_config.theme)
+      return theme_config.theme
+    end
+  end
+  return "onedark" -- default fallback
+end
+
 M.base46 = {
-  theme = "onedark", -- default theme
+  theme = load_saved_theme(), -- default theme
   hl_add = {},
   hl_override = {},
   integrations = {},
