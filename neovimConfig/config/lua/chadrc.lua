@@ -12,23 +12,18 @@ local function load_saved_theme()
     end
   end
   print("Using default theme: onedark")
-  return "onedark" -- default fallback
+  return "onedark"
 end
 
--- Function to save theme persistently with validation
+-- Function to save theme persistently
 local function save_theme_to_file(theme_name)
-  print("save_theme_to_file called with:", theme_name, "type:", type(theme_name))
-  
   if not theme_name or theme_name == "" then
-    print("ERROR: theme_name is empty or nil!")
+    print("ERROR: theme_name is empty!")
     return false
   end
   
   local theme_file = vim.fn.stdpath("data") .. "/nvchad_theme.lua"
   local content = string.format('return { theme = "%s" }', theme_name)
-  
-  print("Writing to file:", theme_file)
-  print("Content:", content)
   
   local file = io.open(theme_file, "w")
   if file then
@@ -36,73 +31,11 @@ local function save_theme_to_file(theme_name)
     file:close()
     vim.notify("Theme saved: " .. theme_name, vim.log.levels.INFO)
     return true
-  else
-    print("ERROR: Could not open file for writing!")
-    return false
-  end
-end
-
--- Function to install theme hook
-local function install_theme_hook()
-  local ok, base46 = pcall(require, "base46")
-  if ok and base46.reload_theme then
-    local original_reload = base46.reload_theme
-    base46.reload_theme = function(theme_name)
-      original_reload(theme_name)
-      -- Use nvconfig as backup since theme_name parameter might be unreliable
-      vim.defer_fn(function()
-        local config_ok, nvconfig = pcall(require, "nvconfig")
-        if config_ok and nvconfig.base46 and nvconfig.base46.theme then
-          save_theme_to_file(nvconfig.base46.theme)
-        else
-          save_theme_to_file(theme_name)
-        end
-      end, 100)
-    end
-    print("✅ Theme auto-save hook installed")
-    return true
   end
   return false
 end
 
--- Enhanced theme picker command that ensures hook is installed
-vim.api.nvim_create_user_command("ThemePicker", function()
-  -- Force hook installation right before opening picker
-  local hook_installed = install_theme_hook()
-  
-  if hook_installed then
-    print("🎨 Theme picker opened with auto-save enabled")
-  else
-    print("⚠️  Theme picker opened - use :SaveTheme to save themes manually")
-  end
-  
-  -- Open the theme picker
-  local ok, themes = pcall(require, "nvchad.themes")
-  if ok and themes.open then
-    themes.open()
-    
-    -- Fallback: Auto-save after a delay (in case hook doesn't work)
-    vim.defer_fn(function()
-      local config_ok, nvconfig = pcall(require, "nvconfig")
-      if config_ok and nvconfig.base46 and nvconfig.base46.theme then
-        local current_theme = nvconfig.base46.theme
-        -- Check if theme file has the current theme
-        local theme_file = vim.fn.stdpath("data") .. "/nvchad_theme.lua"
-        if vim.fn.filereadable(theme_file) == 1 then
-          local file_ok, saved_config = pcall(dofile, theme_file)
-          if not (file_ok and saved_config and saved_config.theme == current_theme) then
-            print("📝 Auto-saving theme after picker closed...")
-            save_theme_to_file(current_theme)
-          end
-        end
-      end
-    end, 2000) -- Wait 2 seconds after theme picker opens
-  else
-    vim.notify("Theme picker not available", vim.log.levels.ERROR)
-  end
-end, { desc = "Open theme picker with auto-save" })
-
--- SIMPLIFIED SaveTheme command that uses nvconfig directly
+-- Simple and reliable SaveTheme command
 vim.api.nvim_create_user_command("SaveTheme", function(opts)
   local theme_name = opts.args
   
@@ -111,18 +44,33 @@ vim.api.nvim_create_user_command("SaveTheme", function(opts)
     local ok, nvconfig = pcall(require, "nvconfig")
     if ok and nvconfig.base46 and nvconfig.base46.theme then
       theme_name = nvconfig.base46.theme
-      print("Got theme from nvconfig:", theme_name)
     else
-      theme_name = "onedark" -- fallback
+      theme_name = "onedark"
     end
   end
   
   save_theme_to_file(theme_name)
 end, { nargs = "?", desc = "Save current theme" })
 
+-- Smart theme picker that auto-saves after selection
+vim.api.nvim_create_user_command("ThemePicker", function()
+  -- Open the theme picker
+  local ok, themes = pcall(require, "nvchad.themes")
+  if ok and themes.open then
+    themes.open()
+    
+    -- Auto-save after a short delay to let theme picker close
+    vim.defer_fn(function()
+      vim.cmd("SaveTheme")
+    end, 1500)
+  else
+    vim.notify("Theme picker not available", vim.log.levels.ERROR)
+  end
+end, { desc = "Open theme picker with auto-save" })
+
 -- Base46 configurations
 M.base46 = {
-  theme = load_saved_theme(), -- Load saved theme on startup
+  theme = load_saved_theme(),
   hl_add = {},
   hl_override = {},
   integrations = {},
@@ -196,25 +144,5 @@ M.cheatsheet = {
 M.lsp = {
   signature = true,
 }
-
--- Try to install hook after everything is loaded
-vim.defer_fn(function()
-  local attempts = 0
-  local max_attempts = 5
-  
-  local function try_hook()
-    attempts = attempts + 1
-    if install_theme_hook() then
-      return -- Success!
-    elseif attempts < max_attempts then
-      vim.defer_fn(try_hook, 1000) -- Try again in 1 second
-    else
-      print("❌ Theme auto-save hook failed after " .. max_attempts .. " attempts")
-      print("   Use :SaveTheme after changing themes")
-    end
-  end
-  
-  try_hook()
-end, 2000)
 
 return M
