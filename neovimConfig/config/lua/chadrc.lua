@@ -65,15 +65,38 @@ local function install_theme_hook()
   return false
 end
 
--- Simple theme picker command
+-- Enhanced theme picker command that ensures hook is installed
 vim.api.nvim_create_user_command("ThemePicker", function()
-  -- Try to install hook first
-  install_theme_hook()
+  -- Force hook installation right before opening picker
+  local hook_installed = install_theme_hook()
+  
+  if hook_installed then
+    print("🎨 Theme picker opened with auto-save enabled")
+  else
+    print("⚠️  Theme picker opened - use :SaveTheme to save themes manually")
+  end
   
   -- Open the theme picker
   local ok, themes = pcall(require, "nvchad.themes")
   if ok and themes.open then
     themes.open()
+    
+    -- Fallback: Auto-save after a delay (in case hook doesn't work)
+    vim.defer_fn(function()
+      local config_ok, nvconfig = pcall(require, "nvconfig")
+      if config_ok and nvconfig.base46 and nvconfig.base46.theme then
+        local current_theme = nvconfig.base46.theme
+        -- Check if theme file has the current theme
+        local theme_file = vim.fn.stdpath("data") .. "/nvchad_theme.lua"
+        if vim.fn.filereadable(theme_file) == 1 then
+          local file_ok, saved_config = pcall(dofile, theme_file)
+          if not (file_ok and saved_config and saved_config.theme == current_theme) then
+            print("📝 Auto-saving theme after picker closed...")
+            save_theme_to_file(current_theme)
+          end
+        end
+      end
+    end, 2000) -- Wait 2 seconds after theme picker opens
   else
     vim.notify("Theme picker not available", vim.log.levels.ERROR)
   end
@@ -106,23 +129,6 @@ M.base46 = {
   changed_themes = {},
   transparency = false,
   theme_toggle = { "onedark", "one_light" },
-}
-
--- UI configurations
-M.ui = {
-  statusline = {
-    theme = "vscode_colored",
-    separator_style = "default",
-  },
-  tabufline = {
-    enabled = true,
-    lazyload = false,
-  },
-  cmp = {
-    lspkind_text = true,
-    style = "default",
-  },
-  telescope = { style = "borderless" },
 }
 
 -- UI configurations
