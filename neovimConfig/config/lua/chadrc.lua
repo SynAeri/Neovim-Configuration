@@ -32,33 +32,31 @@ end
 
 -- Create a custom theme picker command that saves themes
 vim.api.nvim_create_user_command("ThemePicker", function()
-  -- First, override the reload_theme function to capture theme changes
-  local ok, base46 = pcall(require, "base46")
-  if ok and base46.reload_theme then
-    local original_reload = base46.reload_theme
-    base46.reload_theme = function(theme_name)
-      original_reload(theme_name)
-      -- Save the theme when it changes
-      save_theme_to_file(theme_name)
-    end
-  end
+  -- Ensure the hook is installed before opening picker
+  install_theme_hook()
   
   -- Open the theme picker
-  require("nvchad.themes").open()
+  local ok, themes = pcall(require, "nvchad.themes")
+  if ok and themes.open then
+    themes.open()
+  else
+    vim.notify("Theme picker not available", vim.log.levels.ERROR)
+  end
 end, { desc = "Open theme picker with auto-save" })
 
--- Alternative: Create a telescope-based theme picker that saves
-vim.api.nvim_create_user_command("TelescopeThemes", function()
-  -- Try to use telescope themes if available
-  local ok = pcall(vim.cmd, "Telescope themes")
-  if not ok then
-    vim.notify("Telescope themes not available, using modern picker", vim.log.levels.WARN) 
-    vim.cmd("ThemePicker")
-  end
-end, { desc = "Open telescope theme picker" })
+-- Add a simpler theme picker that prompts to save
+vim.api.nvim_create_user_command("ThemePickerSimple", function()
+  -- Open theme picker
+  require("nvchad.themes").open()
+  
+  -- Show a message about saving
+  vim.defer_fn(function()
+    vim.notify("After selecting theme, run :SaveTheme to persist it", vim.log.levels.INFO)
+  end, 500)
+end, { desc = "Open theme picker (manual save)" })
 
--- Hook into base46.reload_theme globally to catch any theme changes
-vim.defer_fn(function()
+-- More robust hook installation with retry mechanism
+local function install_theme_hook()
   local ok, base46 = pcall(require, "base46")
   if ok and base46.reload_theme then
     local original_reload = base46.reload_theme
@@ -67,9 +65,32 @@ vim.defer_fn(function()
       save_theme_to_file(theme_name)
     end
     print("✅ Theme auto-save hook installed")
-  else
-    print("❌ Failed to install theme hook")
+    return true
   end
+  return false
+end
+
+-- Try to install hook multiple times with increasing delays
+local function try_install_hook(attempt)
+  attempt = attempt or 1
+  local max_attempts = 5
+  
+  if install_theme_hook() then
+    return -- Success!
+  elseif attempt < max_attempts then
+    local delay = attempt * 500 -- 500ms, 1s, 1.5s, 2s, 2.5s
+    vim.defer_fn(function()
+      try_install_hook(attempt + 1)
+    end, delay)
+  else
+    print("❌ Failed to install theme hook after " .. max_attempts .. " attempts")
+    print("   You can still use :SaveTheme manually")
+  end
+end
+
+-- Start trying to install the hook
+vim.defer_fn(function()
+  try_install_hook()
 end, 1000)
 
 -- Manual save command
@@ -92,25 +113,22 @@ M.base46 = {
   transparency = false,
   theme_toggle = { "onedark", "one_light" },
 }
+
 -- UI configurations
 M.ui = {
-  -- Statusline configuration
   statusline = {
-    theme = "vscode_colored", -- default/vscode/vscode_colored/minimal
-    separator_style = "default", -- default/round/block/arrow
+    theme = "vscode_colored",
+    separator_style = "default",
   },
-  -- Tabufline (bufferline + tabline) configuration
   tabufline = {
     enabled = true,
     lazyload = false,
   },
-  -- CMP configuration
   cmp = {
     lspkind_text = true,
-    style = "default", -- default/flat_light/flat_dark/atom/atom_colored
+    style = "default",
   },
-  -- Telescope style
-  telescope = { style = "borderless" }, -- borderless / bordered
+  telescope = { style = "borderless" },
 }
 
 -- NvDash configuration
@@ -137,11 +155,10 @@ M.nvdash = {
     { txt = " Find File", keys = "ff", cmd = "Telescope find_files" },
     { txt = "󰈔 Recent Files", keys = "fo", cmd = "Telescope oldfiles" },
     { txt = "󰈭 Find Word", keys = "fw", cmd = "Telescope live_grep" },
-    { txt = "󱥚 Themes", keys = "th", cmd = ":lua require('nvchad.themes').open()" },
+    { txt = "󱥚 Themes", keys = "th", cmd = ":ThemePicker" }, -- CHANGED TO USE CUSTOM COMMAND
     { txt = "󰪛 Mappings", keys = "ch", cmd = "NvCheatsheet" },
     { txt = "─", hl = "NvDashFooter", no_gap = true, rep = true },
     {
-      -- Fixed: Simple text instead of function that requires lazy.nvim
       txt = "  Your drill is the drill that will pierce the heavens",
       hl = "NvDashFooter",
       no_gap = true,
@@ -150,18 +167,15 @@ M.nvdash = {
   },
 }
 
--- Terminal configuration
 M.term = {
   base46_colors = true,
   sizes = { sp = 0.3, vsp = 0.2 },
 }
 
--- Cheatsheet configuration
 M.cheatsheet = {
-  theme = "grid", -- simple/grid
+  theme = "grid",
 }
 
--- LSP signature configuration
 M.lsp = {
   signature = true,
 }
