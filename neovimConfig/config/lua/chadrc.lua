@@ -6,7 +6,7 @@ local function load_saved_theme()
   local theme_file = vim.fn.stdpath("data") .. "/nvchad_theme.lua"
   if vim.fn.filereadable(theme_file) == 1 then
     local ok, theme_config = pcall(dofile, theme_file)
-    if ok and theme_config and theme_config.theme then
+    if ok and theme_config and theme_config.theme and theme_config.theme ~= "" then
       print("Loading saved theme: " .. theme_config.theme)
       return theme_config.theme
     end
@@ -15,10 +15,20 @@ local function load_saved_theme()
   return "onedark" -- default fallback
 end
 
--- Function to save theme persistently
+-- Function to save theme persistently with validation
 local function save_theme_to_file(theme_name)
+  print("save_theme_to_file called with:", theme_name, "type:", type(theme_name))
+  
+  if not theme_name or theme_name == "" then
+    print("ERROR: theme_name is empty or nil!")
+    return false
+  end
+  
   local theme_file = vim.fn.stdpath("data") .. "/nvchad_theme.lua"
   local content = string.format('return { theme = "%s" }', theme_name)
+  
+  print("Writing to file:", theme_file)
+  print("Content:", content)
   
   local file = io.open(theme_file, "w")
   if file then
@@ -26,18 +36,28 @@ local function save_theme_to_file(theme_name)
     file:close()
     vim.notify("Theme saved: " .. theme_name, vim.log.levels.INFO)
     return true
+  else
+    print("ERROR: Could not open file for writing!")
+    return false
   end
-  return false
 end
 
--- Function to install theme hook (MOVED TO TOP)
+-- Function to install theme hook
 local function install_theme_hook()
   local ok, base46 = pcall(require, "base46")
   if ok and base46.reload_theme then
     local original_reload = base46.reload_theme
     base46.reload_theme = function(theme_name)
       original_reload(theme_name)
-      save_theme_to_file(theme_name)
+      -- Use nvconfig as backup since theme_name parameter might be unreliable
+      vim.defer_fn(function()
+        local config_ok, nvconfig = pcall(require, "nvconfig")
+        if config_ok and nvconfig.base46 and nvconfig.base46.theme then
+          save_theme_to_file(nvconfig.base46.theme)
+        else
+          save_theme_to_file(theme_name)
+        end
+      end, 100)
     end
     print("✅ Theme auto-save hook installed")
     return true
@@ -58,43 +78,24 @@ vim.api.nvim_create_user_command("ThemePicker", function()
     vim.notify("Theme picker not available", vim.log.levels.ERROR)
   end
 end, { desc = "Open theme picker with auto-save" })
+
+-- SIMPLIFIED SaveTheme command that uses nvconfig directly
 vim.api.nvim_create_user_command("SaveTheme", function(opts)
   local theme_name = opts.args
   
   if not theme_name or theme_name == "" then
-    -- Method 1: Try to get from base46 cache
-    local cache_file = vim.g.base46_cache .. "colors"
-    if vim.fn.filereadable(cache_file) == 1 then
-      local ok, colors = pcall(dofile, cache_file)
-      if ok and colors and colors.theme then
-        theme_name = colors.theme
-      end
-    end
-    
-    -- Method 2: Check various global variables
-    if not theme_name then
-      theme_name = vim.g.nvchad_theme or vim.g.base46_theme or vim.g.colors_name
-    end
-    
-    -- Method 3: Try to read from nvconfig
-    if not theme_name then
-      local ok, nvconfig = pcall(require, "nvconfig")
-      if ok and nvconfig.base46 and nvconfig.base46.theme then
-        theme_name = nvconfig.base46.theme
-      end
-    end
-    
-    -- Method 4: Fallback to asking user
-    if not theme_name then
-      theme_name = vim.fn.input("Enter theme name: ")
-      if theme_name == "" then
-        theme_name = "onedark"
-      end
+    -- Get current theme from nvconfig (we know this works!)
+    local ok, nvconfig = pcall(require, "nvconfig")
+    if ok and nvconfig.base46 and nvconfig.base46.theme then
+      theme_name = nvconfig.base46.theme
+      print("Got theme from nvconfig:", theme_name)
+    else
+      theme_name = "onedark" -- fallback
     end
   end
   
   save_theme_to_file(theme_name)
-end, { nargs = "?", desc = "Manually save current theme" })
+end, { nargs = "?", desc = "Save current theme" })
 
 -- Base46 configurations
 M.base46 = {
@@ -105,6 +106,23 @@ M.base46 = {
   changed_themes = {},
   transparency = false,
   theme_toggle = { "onedark", "one_light" },
+}
+
+-- UI configurations
+M.ui = {
+  statusline = {
+    theme = "vscode_colored",
+    separator_style = "default",
+  },
+  tabufline = {
+    enabled = true,
+    lazyload = false,
+  },
+  cmp = {
+    lspkind_text = true,
+    style = "default",
+  },
+  telescope = { style = "borderless" },
 }
 
 -- UI configurations
