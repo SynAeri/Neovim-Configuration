@@ -1,15 +1,18 @@
 -- config/lua/chadrc.lua
 local M = {}
 
-
--- Function to load theme from external file
-local function load_theme()
-  local theme_file = vim.fn.stdpath("config") .. "/theme.lua"
+-- Function to load theme from DATA directory (survives Nix rebuilds)
+local function load_saved_theme()
+  local theme_file = vim.fn.stdpath("data") .. "/nvchad_theme.lua"
   if vim.fn.filereadable(theme_file) == 1 then
-    local theme_config = dofile(theme_file)
-    return theme_config.theme or "onedark"
+    local ok, theme_config = pcall(dofile, theme_file)
+    if ok and theme_config and theme_config.theme then
+      print("Loading saved theme: " .. theme_config.theme)
+      return theme_config.theme
+    end
   end
-  return "onedark" -- default theme
+  print("Using default theme: onedark")
+  return "onedark" -- default fallback
 end
 
 -- Function to save theme persistently
@@ -27,20 +30,25 @@ local function save_theme(theme_name)
   return false
 end
 
--- Hook into NvChad's theme system
-vim.api.nvim_create_autocmd("User", {
-  pattern = "Base46ThemeChange",
-  callback = function()
-    local current_theme = vim.g.nvchad_theme
-    if current_theme then
-      save_theme(current_theme)
+-- Create a more reliable hook for theme changes
+vim.defer_fn(function()
+  -- Override NvChad's theme reload function
+  local ok, base46 = pcall(require, "base46")
+  if ok and base46.reload_theme then
+    local original_reload = base46.reload_theme
+    base46.reload_theme = function(theme_name)
+      original_reload(theme_name)
+      -- Save the theme after a short delay
+      vim.defer_fn(function()
+        save_theme(theme_name)
+      end, 100)
     end
-  end,
-})
+  end
+end, 500)
 
--- Base46 configurations (theme should be here, not in ui)
+-- Base46 configurations with corrected function name
 M.base46 = {
-  theme = load_theme(), -- Theme should be in base46, not ui
+  theme = load_saved_theme(), -- Fixed: now calls the correct function
   transparency = false,
   theme_toggle = { "onedark", "one_light" },
 }
