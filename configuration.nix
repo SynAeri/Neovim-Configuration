@@ -326,7 +326,7 @@
   };
 
   services.logind = {
-    lidSwitch = "ignore";
+    lidSwitch = "suspend";
     lidSwitchExternalPower = "ignore";
   };
   # NEOVIM
