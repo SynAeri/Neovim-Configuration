@@ -245,6 +245,7 @@
     xdotool
     pulseaudio
     obsidian
+    teams-for-linux
 
     # Docker
     pkgs.docker_27
@@ -271,6 +272,7 @@
     pkgs.brightnessctl
     libinput
     yarn
+    wireshark
 
     # Display Manager
     physlock
@@ -321,6 +323,11 @@
     PasswordAuthentication = true;  # You can disable this later and use keys
     PermitRootLogin = "no";
     };
+  };
+
+  services.logind = {
+    lidSwitch = "ignore";
+    lidSwitchExternalPower = "ignore";
   };
   # NEOVIM
 }
