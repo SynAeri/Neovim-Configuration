@@ -12,6 +12,32 @@ local function load_theme()
   return "onedark" -- default theme
 end
 
+-- Function to save theme persistently
+local function save_theme(theme_name)
+  local theme_file = vim.fn.stdpath("data") .. "/nvchad_theme.lua"
+  local content = string.format('return { theme = "%s" }', theme_name)
+  
+  local file = io.open(theme_file, "w")
+  if file then
+    file:write(content)
+    file:close()
+    print("Theme saved: " .. theme_name)
+    return true
+  end
+  return false
+end
+
+-- Hook into NvChad's theme system
+vim.api.nvim_create_autocmd("User", {
+  pattern = "Base46ThemeChange",
+  callback = function()
+    local current_theme = vim.g.nvchad_theme
+    if current_theme then
+      save_theme(current_theme)
+    end
+  end,
+})
+
 -- Base46 configurations (theme should be here, not in ui)
 M.base46 = {
   theme = load_theme(), -- Theme should be in base46, not ui
