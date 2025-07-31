@@ -1,7 +1,7 @@
 -- config/lua/chadrc.lua
 local M = {}
 
--- Function to load saved theme (MISSING FUNCTION)
+-- Function to load saved theme
 local function load_saved_theme()
   local theme_file = vim.fn.stdpath("data") .. "/nvchad_theme.lua"
   if vim.fn.filereadable(theme_file) == 1 then
@@ -30,32 +30,7 @@ local function save_theme_to_file(theme_name)
   return false
 end
 
--- Create a custom theme picker command that saves themes
-vim.api.nvim_create_user_command("ThemePicker", function()
-  -- Ensure the hook is installed before opening picker
-  install_theme_hook()
-  
-  -- Open the theme picker
-  local ok, themes = pcall(require, "nvchad.themes")
-  if ok and themes.open then
-    themes.open()
-  else
-    vim.notify("Theme picker not available", vim.log.levels.ERROR)
-  end
-end, { desc = "Open theme picker with auto-save" })
-
--- Add a simpler theme picker that prompts to save
-vim.api.nvim_create_user_command("ThemePickerSimple", function()
-  -- Open theme picker
-  require("nvchad.themes").open()
-  
-  -- Show a message about saving
-  vim.defer_fn(function()
-    vim.notify("After selecting theme, run :SaveTheme to persist it", vim.log.levels.INFO)
-  end, 500)
-end, { desc = "Open theme picker (manual save)" })
-
--- More robust hook installation with retry mechanism
+-- Function to install theme hook (MOVED TO TOP)
 local function install_theme_hook()
   local ok, base46 = pcall(require, "base46")
   if ok and base46.reload_theme then
@@ -70,28 +45,19 @@ local function install_theme_hook()
   return false
 end
 
--- Try to install hook multiple times with increasing delays
-local function try_install_hook(attempt)
-  attempt = attempt or 1
-  local max_attempts = 5
+-- Simple theme picker command
+vim.api.nvim_create_user_command("ThemePicker", function()
+  -- Try to install hook first
+  install_theme_hook()
   
-  if install_theme_hook() then
-    return -- Success!
-  elseif attempt < max_attempts then
-    local delay = attempt * 500 -- 500ms, 1s, 1.5s, 2s, 2.5s
-    vim.defer_fn(function()
-      try_install_hook(attempt + 1)
-    end, delay)
+  -- Open the theme picker
+  local ok, themes = pcall(require, "nvchad.themes")
+  if ok and themes.open then
+    themes.open()
   else
-    print("❌ Failed to install theme hook after " .. max_attempts .. " attempts")
-    print("   You can still use :SaveTheme manually")
+    vim.notify("Theme picker not available", vim.log.levels.ERROR)
   end
-end
-
--- Start trying to install the hook
-vim.defer_fn(function()
-  try_install_hook()
-end, 1000)
+end, { desc = "Open theme picker with auto-save" })
 
 -- Manual save command
 vim.api.nvim_create_user_command("SaveTheme", function(opts)
@@ -103,7 +69,7 @@ vim.api.nvim_create_user_command("SaveTheme", function(opts)
   save_theme_to_file(theme_name)
 end, { nargs = "?", desc = "Manually save current theme" })
 
--- Base46 configurations - NOW USES THE CORRECT FUNCTION
+-- Base46 configurations
 M.base46 = {
   theme = load_saved_theme(), -- Load saved theme on startup
   hl_add = {},
