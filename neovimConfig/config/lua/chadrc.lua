@@ -7,7 +7,7 @@ local function load_saved_theme()
   if vim.fn.filereadable(theme_file) == 1 then
     local ok, theme_config = pcall(dofile, theme_file)
     if ok and theme_config and theme_config.theme and theme_config.theme ~= "" then
-      print("Loading saved theme: " .. theme_config.theme)
+      --print("Loading saved theme: " .. theme_config.theme)
       return theme_config.theme
     end
   end
@@ -121,6 +121,7 @@ M.nvdash = {
     { txt = "󰈔 Recent Files", keys = "fo", cmd = "Telescope oldfiles" },
     { txt = "󰈭 Find Word", keys = "fw", cmd = "Telescope live_grep" },
     { txt = "󱥚 Themes", keys = "th", cmd = ":ThemePicker" },
+    { txt = "󱥚 Note: Savetheme After picking Themes", keys = "SaveTheme", cmd = ":SaveTheme" },
     { txt = "󰪛 Mappings", keys = "ch", cmd = "NvCheatsheet" },
     { txt = "─", hl = "NvDashFooter", no_gap = true, rep = true },
     {
