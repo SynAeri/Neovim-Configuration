@@ -26,6 +26,8 @@ with pkgs.vimPlugins; [
 
   # Aesthetics and simple QOL
   indent-blankline-nvim
+  markdown-preview-nvim
+
 
   # Git Integrations
   gitsigns-nvim
