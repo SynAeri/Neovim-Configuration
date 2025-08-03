@@ -121,7 +121,7 @@ M.nvdash = {
     { txt = "󰈔 Recent Files", keys = "fo", cmd = "Telescope oldfiles" },
     { txt = "󰈭 Find Word", keys = "fw", cmd = "Telescope live_grep" },
     { txt = "󱥚 Themes", keys = "th", cmd = ":ThemePicker" },
-    { txt = "󱥚 Note: Savetheme After picking Themes", keys = "SaveTheme", cmd = ":SaveTheme" },
+    { txt = "󱥚 Note: Savetheme After picking Themes", keys = "St", cmd = ":SaveTheme" },
     { txt = "󰪛 Mappings", keys = "ch", cmd = "NvCheatsheet" },
     { txt = "─", hl = "NvDashFooter", no_gap = true, rep = true },
     {
