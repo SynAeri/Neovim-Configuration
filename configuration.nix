@@ -250,6 +250,9 @@
     # Docker
     pkgs.docker
 
+    # Deployment
+    railway
+
     # Eww dependencies
     cairo
     gtk3
