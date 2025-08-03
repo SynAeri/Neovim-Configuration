@@ -248,7 +248,7 @@
     teams-for-linux
 
     # Docker
-    pkgs.docker_27
+    pkgs.docker
 
     # Eww dependencies
     cairo
