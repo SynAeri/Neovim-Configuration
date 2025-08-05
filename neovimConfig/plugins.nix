@@ -14,8 +14,12 @@ with pkgs.vimPlugins; [
   # Tree-sitter related plugins
   nvim-treesitter-textobjects  # Enhanced text objects
   nvim-treesitter-context      # Show current function/class context
-  nvim-treesitter-parsers.norg
-
+  
+  # Tree-sitter parsers added extra
+  (nvim-treesitter.withPlugins (p: with p; [
+    tree-sitter-norg
+    
+  ]))
 
   # Lsps
   nvim-lspconfig
