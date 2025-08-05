@@ -34,4 +34,7 @@ with pkgs.vimPlugins; [
 
   # Compiling
   compiler-nvim
+
+  # Notetaking
+  neorg
 ]
