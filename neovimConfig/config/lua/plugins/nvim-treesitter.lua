@@ -3,7 +3,9 @@
 require('nvim-treesitter.configs').setup({
   -- Since we're using withAllGrammars, we don't need ensure_installed
   -- All grammars are already installed via Nix
-  
+    ensure_installed = { 
+    "norg"
+  },
   highlight = {
     enable = true,
     -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
