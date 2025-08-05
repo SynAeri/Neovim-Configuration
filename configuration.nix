@@ -276,6 +276,8 @@
     libinput
     yarn
     wireshark
+    bfg-repo-cleaner
+
 
     # Display Manager
     physlock
