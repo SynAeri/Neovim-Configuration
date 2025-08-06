@@ -295,7 +295,7 @@
     tree
     wget
     ripgrep
-    tracert
+    traceroute
     
     # Programming Languages & LSP
     nil
