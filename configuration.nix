@@ -296,6 +296,7 @@
     wget
     ripgrep
     traceroute
+    alacritty-theme
     
     # Programming Languages & LSP
     nil
