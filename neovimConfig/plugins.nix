@@ -42,5 +42,6 @@ with pkgs.vimPlugins; [
   compiler-nvim
 
   # Notetaking
-  neorg
+  obsidian-nvim
+
 ]
