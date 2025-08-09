@@ -4,11 +4,11 @@ require("obsidian").setup({
   workspaces = {
     {
       name = "personal",
-      path = "~/vaults/personalStuff",  -- Change this to your vault path
+      path = "~/Obsidian/personalStuff",  -- Change this to your vault path
     },
     {
       name = "work",
-      path = "~/vaults/studyStuff",      -- Optional: add multiple vaults
+      path = "~/Obsidian/studyStuff",      -- Optional: add multiple vaults
     },
   },
 
