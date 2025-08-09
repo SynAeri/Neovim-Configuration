@@ -33,7 +33,7 @@ with pkgs.vimPlugins; [
   # Aesthetics and simple QOL
   indent-blankline-nvim
   markdown-preview-nvim
-
+  render-markdown-nvim
 
   # Git Integrations
   gitsigns-nvim
