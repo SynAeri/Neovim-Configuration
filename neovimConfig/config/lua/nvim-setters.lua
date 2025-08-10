@@ -80,3 +80,10 @@ map("n", "<leader>rcon", "<cmd>RenderMarkdown contract<cr>", { desc = "Contract 
 -- ============================================================================
 
 map("n", "<leader>tr", ":Neotree toggle right<CR>", { noremap = true, silent = true, desc = "Toggle Neo-tree" })
+
+
+-- ============================================================================
+-- GENERAL STUFF
+-- ============================================================================
+
+map ("n", "<leader>fw", ":Telescope live_grep<cr>", {desc = "Does a live grep search"}) 
