@@ -207,27 +207,3 @@ require('render-markdown').setup({
     width = 'full',
   },
 })
-
--- Custom keymaps for Obsidian commands
-local function map(mode, lhs, rhs, opts)
-  opts = opts or {}
-  opts.silent = opts.silent ~= false
-  vim.keymap.set(mode, lhs, rhs, opts)
-end
-
--- Leader + o prefix for Obsidian commands
-map("n", "<leader>on", "<cmd>ObsidianNew<cr>", { desc = "New Obsidian note" })
-map("n", "<leader>oo", "<cmd>ObsidianOpen<cr>", { desc = "Open in Obsidian app" })
-map("n", "<leader>ob", "<cmd>ObsidianBacklinks<cr>", { desc = "Show backlinks" })
-map("n", "<leader>ot", "<cmd>ObsidianTemplate<cr>", { desc = "Insert template" })
-map("n", "<leader>os", "<cmd>ObsidianSearch<cr>", { desc = "Search notes" })
-map("n", "<leader>oq", "<cmd>ObsidianQuickSwitch<cr>", { desc = "Quick switch" })
-map("n", "<leader>ol", "<cmd>ObsidianLinks<cr>", { desc = "Show links" })
-map("n", "<leader>od", "<cmd>ObsidianToday<cr>", { desc = "Today's note" })
-map("n", "<leader>oy", "<cmd>ObsidianYesterday<cr>", { desc = "Yesterday's note" })
-map("n", "<leader>om", "<cmd>ObsidianTomorrow<cr>", { desc = "Tomorrow's note" })
-
--- Visual mode mappings
-map("v", "<leader>ol", "<cmd>ObsidianLink<cr>", { desc = "Link selection" })
-map("v", "<leader>oln", "<cmd>ObsidianLinkNew<cr>", { desc = "Link to new note" })
-map("v", "<leader>oe", "<cmd>ObsidianExtractNote<cr>", { desc = "Extract to new note" })

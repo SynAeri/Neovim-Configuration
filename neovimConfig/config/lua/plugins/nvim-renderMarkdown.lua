@@ -157,16 +157,3 @@ vim.api.nvim_create_autocmd({"ModeChanged", "InsertEnter", "InsertLeave"}, {
   end,
 })
 
--- Keymap to manually toggle concealment
-local function toggle_math_concealment()
-  local current_conceal = vim.wo.conceallevel
-  if current_conceal == 3 then
-    vim.wo.conceallevel = 0
-    print("LaTeX source visible")
-  else
-    vim.wo.conceallevel = 3
-    print("LaTeX source hidden")
-  end
-end
-
-vim.keymap.set('n', '<leader>mc', toggle_math_concealment, { desc = "Toggle math concealment" })
