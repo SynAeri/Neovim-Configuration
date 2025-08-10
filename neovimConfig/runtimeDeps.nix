@@ -18,6 +18,7 @@
     nodePackages.yaml-language-server  # YAML
     nodePackages.vscode-langservers-extracted  # HTML/CSS/JSON/ESLint
     terraform-ls                # Terraform
+    python313Packages.pylatexenc # Latex stuff
   ];
   deps2 = with pkgs; [ lazygit ];
 }
