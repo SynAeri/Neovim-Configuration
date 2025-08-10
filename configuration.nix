@@ -320,7 +320,6 @@
 
   # DBUS stuff
   services.dbus.enable = true;
-  services.dconf.enable = true;
 
   # NIXOS
   nix.settings.trusted-users = [ "root" "jordanm" ];
