@@ -19,6 +19,7 @@
     nodePackages.vscode-langservers-extracted  # HTML/CSS/JSON/ESLint
     terraform-ls                # Terraform
     python313Packages.pylatexenc # Latex stuff
+    deno                        # For peek thingy for markdown
   ];
   deps2 = with pkgs; [ lazygit ];
 }
