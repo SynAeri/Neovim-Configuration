@@ -29,6 +29,7 @@ with pkgs.vimPlugins; [
   nvim-cmp
   luasnip               # <-- snippet support
   cmp_luasnip           # <-- snippet completions
+  nvim-autopairs
 
   # Aesthetics and simple QOL
   indent-blankline-nvim
