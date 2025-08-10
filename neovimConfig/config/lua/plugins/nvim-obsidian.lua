@@ -147,14 +147,38 @@ require('render-markdown').setup({
   preset = 'obsidian',  -- Use obsidian preset for callouts
   file_types = { 'markdown' },
   
-  -- LaTeX math rendering
+  -- LaTeX math rendering with maximum concealment
   latex = {
     enabled = true,
-    converter = 'latex2text',  -- Converts LaTeX to Unicode
+    converter = 'latex2text',
     highlight = 'RenderMarkdownMath',
-    position = 'above',  -- Render above the LaTeX block
+    position = 'above',  -- Show rendered math above
     top_pad = 0,
     bottom_pad = 0,
+  },
+  
+  -- Anti-conceal settings - hide as much as possible in normal mode
+  anti_conceal = {
+    enabled = true,
+    above = 0,  -- Don't show raw markdown above cursor
+    below = 0,  -- Don't show raw markdown below cursor
+    -- Remove most ignores to allow maximum concealment
+    ignore = {
+      -- Only keep essential elements that shouldn't be concealed
+      sign = true,
+    },
+  },
+  
+  -- Window options for better concealment
+  win_options = {
+    conceallevel = {
+      default = vim.o.conceallevel,
+      rendered = 3,  -- Maximum concealment in normal mode
+    },
+    concealcursor = {
+      default = vim.o.concealcursor,
+      rendered = '',  -- Show concealed text in all modes when cursor on line
+    },
   },
   
   -- Obsidian-style checkboxes
@@ -207,4 +231,3 @@ map("n", "<leader>om", "<cmd>ObsidianTomorrow<cr>", { desc = "Tomorrow's note" }
 map("v", "<leader>ol", "<cmd>ObsidianLink<cr>", { desc = "Link selection" })
 map("v", "<leader>oln", "<cmd>ObsidianLinkNew<cr>", { desc = "Link to new note" })
 map("v", "<leader>oe", "<cmd>ObsidianExtractNote<cr>", { desc = "Extract to new note" })
-
