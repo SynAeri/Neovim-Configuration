@@ -12,6 +12,7 @@ require("obsidian").setup({
     },
   },
 
+
   -- Optional: log level
   log_level = vim.log.levels.INFO,
 
@@ -105,35 +106,9 @@ require("obsidian").setup({
     },
   },
 
-  -- UI options
+  -- UI options - DISABLE to avoid conflict with render-markdown
   ui = {
-    enable = true,
-    update_debounce = 200,
-    checkboxes = {
-      [" "] = { char = "󰄱", hl_group = "ObsidianTodo" },
-      ["x"] = { char = "", hl_group = "ObsidianDone" },
-      [">"] = { char = "", hl_group = "ObsidianRightArrow" },
-      ["~"] = { char = "󰰱", hl_group = "ObsidianTilde" },
-    },
-    bullets = { char = "•", hl_group = "ObsidianBullet" },
-    external_link_icon = { char = "", hl_group = "ObsidianExtLinkIcon" },
-    reference_text = { hl_group = "ObsidianRefText" },
-    highlight_text = { hl_group = "ObsidianHighlightText" },
-    tags = { hl_group = "ObsidianTag" },
-    block_ids = { hl_group = "ObsidianBlockID" },
-    hl_groups = {
-      -- Custom highlight groups
-      ObsidianTodo = { bold = true, fg = "#f78c6c" },
-      ObsidianDone = { bold = true, fg = "#89ddff" },
-      ObsidianRightArrow = { bold = true, fg = "#f78c6c" },
-      ObsidianTilde = { bold = true, fg = "#ff5370" },
-      ObsidianBullet = { bold = true, fg = "#89ddff" },
-      ObsidianRefText = { underline = true, fg = "#c792ea" },
-      ObsidianExtLinkIcon = { fg = "#c792ea" },
-      ObsidianTag = { italic = true, fg = "#89ddff" },
-      ObsidianBlockID = { italic = true, fg = "#89ddff" },
-      ObsidianHighlightText = { bg = "#75662e" },
-    },
+    enable = false,  -- Disable obsidian UI to use render-markdown instead
   },
 
   -- Follow URL with system browser
@@ -143,8 +118,14 @@ require("obsidian").setup({
     -- vim.cmd(':silent exec "!start ' .. url .. '"') -- Windows
   end,
 
-  -- Use advanced URI for Obsidian app
-  use_advanced_uri = true,
+  -- Use advanced URI for Obsidian app (updated syntax)
+  open = {
+    app_name = "obsidian",
+    use_advanced_uri = true,
+  },
+
+  -- Enable legacy commands to avoid deprecation warning (set to false when ready to migrate)
+  legacy_commands = true,
 
   -- Finder options
   finder = "telescope.nvim",  -- or "fzf-lua"
@@ -165,6 +146,16 @@ require('render-markdown').setup({
   render_modes = { 'n', 'c', 't' },
   preset = 'obsidian',  -- Use obsidian preset for callouts
   file_types = { 'markdown' },
+  
+  -- LaTeX math rendering
+  latex = {
+    enabled = true,
+    converter = 'latex2text',  -- Converts LaTeX to Unicode
+    highlight = 'RenderMarkdownMath',
+    position = 'above',  -- Render above the LaTeX block
+    top_pad = 0,
+    bottom_pad = 0,
+  },
   
   -- Obsidian-style checkboxes
   checkbox = {
@@ -216,3 +207,4 @@ map("n", "<leader>om", "<cmd>ObsidianTomorrow<cr>", { desc = "Tomorrow's note" }
 map("v", "<leader>ol", "<cmd>ObsidianLink<cr>", { desc = "Link selection" })
 map("v", "<leader>oln", "<cmd>ObsidianLinkNew<cr>", { desc = "Link to new note" })
 map("v", "<leader>oe", "<cmd>ObsidianExtractNote<cr>", { desc = "Extract to new note" })
+
