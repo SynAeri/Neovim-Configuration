@@ -5,7 +5,7 @@ require('peek').setup({
   syntax = true,
   theme = 'dark',
   update_on_change = true,
-  app = 'webview',
+  app = 'browser',
   filetype = { 'markdown' },
   throttle_at = 200000,
   throttle_time = 'auto',
