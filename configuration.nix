@@ -310,7 +310,17 @@
     
     # Networking
     iw
+
+    # Required for Deno webview functionality
+    webkitgtk_4_1  # This provides webkit2gtk
+    pkg-config
+    glib
+    gtk3
   ];
+
+  # DBUS stuff
+  services.dbus.enable = true;
+  services.dconf.enable = true;
 
   # NIXOS
   nix.settings.trusted-users = [ "root" "jordanm" ];
