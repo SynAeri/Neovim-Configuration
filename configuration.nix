@@ -318,9 +318,6 @@
     gtk3
   ];
 
-  # DBUS stuff
-  services.dbus.enable = true;
-
   # NIXOS
   nix.settings.trusted-users = [ "root" "jordanm" ];
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
