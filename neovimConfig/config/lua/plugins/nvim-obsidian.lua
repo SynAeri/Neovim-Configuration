@@ -4,14 +4,14 @@ require("obsidian").setup({
   workspaces = {
     {
       name = "personal",
-      path = "~/Obsidian/personalStuff",  -- Change this to your vault path
+      path = vim.fn.expand("~/Documents/Notes"),  -- Change this to your actual vault path
     },
-    {
-      name = "work",
-      path = "~/Obsidian/studyStuff",      -- Optional: add multiple vaults
-    },
+    -- Uncomment and adjust if you have multiple vaults
+    -- {
+    --   name = "work",
+    --   path = vim.fn.expand("~/Documents/WorkNotes"),
+    -- },
   },
-
 
   -- Optional: log level
   log_level = vim.log.levels.INFO,
