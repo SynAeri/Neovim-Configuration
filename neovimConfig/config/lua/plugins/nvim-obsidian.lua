@@ -6,13 +6,13 @@ require("obsidian").setup({
   workspaces = {
     {
       name = "personal",
-      path = vim.fn.expand("~/Documents/personalStuff"),
+      path = vim.fn.expand("~/Obsidian/personalStuff"),
     },
     {
       name = "work", 
-      path = vim.fn.expand("~/Documents/studyStuff"),
+      path = vim.fn.expand("~/Obsidian/studyStuff"),
     },
-  },
+  }, -- <- This closing brace was missing!
 
   -- Optional: log level
   log_level = vim.log.levels.INFO,
@@ -101,10 +101,10 @@ require("obsidian").setup({
   },
 
   -- Use new command syntax (no legacy commands)
-  legacy_commands = false, -- Changed to false
+  legacy_commands = false,
 
-  -- Disable deprecated mappings
-  mappings = {}, -- Empty table instead of deprecated mappings
+  -- Remove mappings completely (deprecated)
+  -- mappings = {}, -- Remove this line entirely
 
   -- Finder options
   finder = "telescope.nvim",
@@ -117,29 +117,4 @@ require("obsidian").setup({
   
   -- YAML frontmatter options
   yaml_parser = "native",
-}) -- <- Make sure this closing brace is here!
-
--- Custom keymaps for Obsidian commands (new command syntax)
-local function map(mode, lhs, rhs, opts)
-  opts = opts or {}
-  opts.silent = opts.silent ~= false
-  vim.keymap.set(mode, lhs, rhs, opts)
-end
-
--- Manual keybindings for obsidian functionality (since mappings are deprecated)
--- These replace the old mappings config
-map("n", "gf", function()
-  if require("obsidian").util.cursor_on_markdown_link() then
-    return "<cmd>Obsidian follow_link<cr>"
-  else
-    return "gf"
-  end
-end, { noremap = false, expr = true })
-
-map("n", "<cr>", function()
-  return require("obsidian").util.smart_action()
-end, { buffer = true, expr = true })
-
-map("n", "<leader>ch", function()
-  return require("obsidian").util.toggle_checkbox()
-end, { buffer = true })
+})
