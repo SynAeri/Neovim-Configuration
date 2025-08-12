@@ -246,6 +246,7 @@
     pulseaudio
     obsidian
     teams-for-linux
+    qalculate-qt
 
     # Docker
     pkgs.docker
