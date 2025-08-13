@@ -79,6 +79,6 @@ map ("n", "<leader>fo", ":Telescope oldfiles <cr>", {desc = "Search for old file
 -- ============================================================================
 
 
-map ("n", "<leader>cLd", ":Calendar -position=left -split=vertical -view=day -width=60", {desc = "Calendar left for one day"}) 
-map ("n", "<leader>cLm", ":Calendar -position=left -split=vertical -view=month -width=60", {desc = "Calendar left for one month"}) 
+map ("n", "<leader>cLD", ":Calendar -position=left -split=vertical -view=day -width=60", {desc = "Calendar left for one day"}) 
+map ("n", "<leader>cLM", ":Calendar -position=left -split=vertical -view=month -width=60", {desc = "Calendar left for one month"}) 
 
