@@ -74,3 +74,11 @@ map ("n", "<leader>fo", ":Telescope oldfiles <cr>", {desc = "Search for old file
 -- Buffer Move 
 -- ============================================================================
 
+-- ============================================================================
+-- Oguri cap
+-- ============================================================================
+
+
+map ("n", "<leader>cLd", ":Calendar -position=left -split=vertical -view=day -width=60", {desc = "Calendar left for one day"}) 
+map ("n", "<leader>cLm", ":Calendar -position=left -split=vertical -view=month -width=60", {desc = "Calendar left for one month"}) 
+
