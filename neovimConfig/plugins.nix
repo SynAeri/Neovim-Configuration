@@ -34,7 +34,7 @@ with pkgs.vimPlugins; [
   # Aesthetics and simple QOL
   indent-blankline-nvim
   markview-nvim
-
+  calendar-vim
 
 
   # Git Integrations
