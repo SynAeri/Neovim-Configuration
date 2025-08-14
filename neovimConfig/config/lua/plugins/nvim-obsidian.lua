@@ -7,9 +7,8 @@ require("obsidian").setup({
     {
       name = "all",
       path = vim.fn.expand("~/Obsidian/allStuff"),
-    },
-    {
-  }, -- <- This closing brace was missing!
+    }
+  }, 
 
   -- Optional: log level
   log_level = vim.log.levels.INFO,
