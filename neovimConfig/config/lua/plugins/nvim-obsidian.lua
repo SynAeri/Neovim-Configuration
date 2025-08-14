@@ -5,13 +5,10 @@ require("obsidian").setup({
   -- Required: specify your vault(s)
   workspaces = {
     {
-      name = "personal",
-      path = vim.fn.expand("~/Obsidian/personalStuff"),
+      name = "all",
+      path = vim.fn.expand("~/Obsidian/allStuff"),
     },
     {
-      name = "work", 
-      path = vim.fn.expand("~/Obsidian/studyStuff"),
-    },
   }, -- <- This closing brace was missing!
 
   -- Optional: log level
