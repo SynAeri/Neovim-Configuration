@@ -247,6 +247,7 @@
     obsidian
     teams-for-linux
     qalculate-qt
+    zathura
 
     # Docker
     pkgs.docker
