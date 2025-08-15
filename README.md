@@ -9,7 +9,8 @@ Not only that, but its easily reproducable and it comes with my neovim setup tha
 
 ---
 # Structure
-.
+
+```
 ├── configuration.nix
 ├── flake.lock
 ├── flake.nix
@@ -55,4 +56,4 @@ Not only that, but its easily reproducable and it comes with my neovim setup tha
 │   └── test.py
 ├── README.md
 └── users.nix
-
+```
