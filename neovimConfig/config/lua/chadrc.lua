@@ -123,7 +123,6 @@ M.nvdash = {
     { txt = "󱥚 Themes", keys = "th", cmd = ":ThemePicker" },
     { txt = "󱥚 Note: Savetheme After picking Themes", keys = "St", cmd = ":SaveTheme" },
     { txt = "󰪛 Mappings", keys = "ch", cmd = "NvCheatsheet" },
-    { txt = "─", hl = "NvDashFooter", no_gap = true, rep = true },
     { txt = "󰪛 CalendarView", keys = "cLa", cmd = ":Calendar -position=left -split=vertical -view=agenda" },
     { txt = "─", hl = "NvDashFooter", no_gap = true, rep = true },
     {
