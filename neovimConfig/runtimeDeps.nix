@@ -20,6 +20,7 @@
     terraform-ls                # Terraform
     python313Packages.pylatexenc # Latex stuff
     deno                        # For peek thingy for markdown
+    curl
   ];
   deps2 = with pkgs; [ lazygit ];
 }
