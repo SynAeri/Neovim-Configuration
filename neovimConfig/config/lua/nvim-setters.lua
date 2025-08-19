@@ -68,6 +68,7 @@ map("n", "<leader>tr", ":Neotree toggle right<CR>", { noremap = true, silent = t
 
 map ("n", "<leader>fw", ":Telescope live_grep<cr>", {desc = "Does a live grep search"}) 
 map ("n", "<leader>fo", ":Telescope oldfiles <cr>", {desc = "Search for old files"}) 
+map ("n", "<leader>fb", ":Telescope buffers <cr>", {desc = "Search for buffer lists"}) 
 
 
 -- ============================================================================

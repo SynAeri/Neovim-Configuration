@@ -283,7 +283,8 @@
 
     # Display Manager
     physlock
-    
+    htop
+
     # Graphics
     vulkan-tools
     glxinfo
