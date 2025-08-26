@@ -16,10 +16,11 @@
 #};
 
 
-
-
-
-
+  # Hardware Accel stuff 
+  environment.sessionVariables = {
+    ELECTRON_OZONE_PLATFORM_HINT = "auto";
+    ELECTRON_FLAGS = "--enable-features=VaapiVideoDecoder --enable-hardware-acceleration";
+  };
 
   boot.initrd.kernelModules = [ "i2c_hid"];
   # System & Bootloader
@@ -313,6 +314,7 @@
     
     # Networking
     iw
+    unixtools.route
 
     # Required for Deno webview functionality
     webkitgtk_4_1  # This provides webkit2gtk
