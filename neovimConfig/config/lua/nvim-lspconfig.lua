@@ -26,3 +26,15 @@ nvim_lsp.clangd.setup({
   capabilities = capabilities,
 })
 
+nvim_lsp.html.setup({
+  capabilities = capabilities,
+  filetypes = { "html", "templ" },
+})
+
+nvim_lsp.cssls.setup({
+  capabilities = capabilities,
+})
+
+nvim_lsp.jsonls.setup({
+  capabilities = capabilities,
+})

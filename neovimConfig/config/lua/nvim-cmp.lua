@@ -22,5 +22,9 @@ cmp.setup({
   }, {
     { name = 'buffer' },       -- Buffer completions
     { name = 'path' },         -- Path completions
-  })
+  }),
+  completion = {
+    completeopt = 'menu,menuone,noinsert',
+    keyword_length = 1, -- This allows completion to trigger after just 1 character
+  },
 })
