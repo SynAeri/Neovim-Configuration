@@ -329,6 +329,9 @@
     pkg-config
     glib
     gtk3
+
+    # WINE
+    wineWowPackages.full
   ];
 
   # NIXOS
