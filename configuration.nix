@@ -332,6 +332,9 @@
 
     # WINE
     wineWowPackages.full
+
+    # HACKING TOOLS
+    nmap
   ];
 
   # NIXOS
