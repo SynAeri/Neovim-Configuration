@@ -335,6 +335,7 @@
 
     # HACKING TOOLS
     nmap
+    john
   ];
 
   # NIXOS
