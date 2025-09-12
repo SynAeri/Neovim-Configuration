@@ -336,6 +336,7 @@
     # HACKING TOOLS
     nmap
     john
+    burpsuite
   ];
 
   # NIXOS
