@@ -340,6 +340,7 @@
     openssl
     cyberchef
     audacity
+    file
   ];
 
   # NIXOS
