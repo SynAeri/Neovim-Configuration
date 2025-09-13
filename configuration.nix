@@ -341,6 +341,7 @@
     cyberchef
     audacity
     file
+    gnupg1
   ];
 
   # NIXOS
