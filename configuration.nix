@@ -339,6 +339,7 @@
     burpsuite
     openssl
     cyberchef
+    audacity
   ];
 
   # NIXOS
