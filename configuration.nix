@@ -338,6 +338,7 @@
     john
     burpsuite
     openssl
+    cyberchef
   ];
 
   # NIXOS
