@@ -337,6 +337,7 @@
     nmap
     john
     burpsuite
+    openssl
   ];
 
   # NIXOS
