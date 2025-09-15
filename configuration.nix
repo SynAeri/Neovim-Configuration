@@ -282,6 +282,7 @@
     lazygit
     gnumake
     unzip
+    zip
     gzip
     pkgs.brightnessctl
     libinput
