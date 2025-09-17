@@ -289,6 +289,7 @@
     yarn
     wireshark
     bfg-repo-cleaner
+    mkinitcpio-nfs-utils
 
 
     # Display Manager
