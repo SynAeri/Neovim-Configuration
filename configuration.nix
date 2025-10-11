@@ -322,7 +322,10 @@
     libgccjit # For C
     mono # For C#
     zulu8 # Hopefully for Javac
-    
+    rustc # For rust
+    cargo
+    go
+
     # Networking
     iw
     unixtools.route
