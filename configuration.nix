@@ -52,7 +52,7 @@
 
   # Flatpack Activation
   services.flatpak.enable = true;
-
+  services.autorandr.enable = true;
 
   # Hardware & Firmware
   hardware.enableRedistributableFirmware = true;
@@ -202,6 +202,7 @@
     
     # HDMI matters
     autorandr
+
 
     # SSH Sys
     openssh
