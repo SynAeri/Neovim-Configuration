@@ -291,6 +291,7 @@
     wireshark
     bfg-repo-cleaner
     mkinitcpio-nfs-utils
+    pavucontrol
 
 
     # Display Manager
