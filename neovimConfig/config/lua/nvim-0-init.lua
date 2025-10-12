@@ -15,5 +15,9 @@ vim.api.nvim_create_autocmd("VimEnter", {
   end,
 })
 
+vim.opt.title = true
+vim.opt.titlestring = "nvim - %t"  -- %t = filename
+
+
 -- Calendar init
 
