@@ -2,6 +2,18 @@
 local nvim_lsp = require("lspconfig")
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
+-- Global Configurations
+vim.diagnostic.config({
+  virtual_text = true, -- Show error messages inline at end of the line
+  underline = true, -- Underlines the specific error code
+
+  float = {
+    border = "rounded", -- Diagnostic popups are rounded
+    source = "always", -- Will always show the lsp provided the diag. 
+  },
+
+})
+
 nvim_lsp.ts_ls.setup({
   -- Just use the tsserver from PATH
   -- No need to specify the exact nix store path
