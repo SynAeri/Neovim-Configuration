@@ -43,3 +43,10 @@ nvim_lsp.rust_analyzer.setup({
 nvim_lsp.jsonls.setup({
   capabilities = capabilities,
 })
+
+nvim_lsp.sqls.setup({
+  capabilities = capabilities,
+  on_attach = function(client, bufnr)
+    require('sqls').on_attach(client, bufnr)
+  end
+})

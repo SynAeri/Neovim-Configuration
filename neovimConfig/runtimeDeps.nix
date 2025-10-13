@@ -21,6 +21,7 @@
     python313Packages.pylatexenc # Latex stuff
     deno                        # For peek thingy for markdown
     curl
+    sqls                        # SQL Language Server
   ];
   deps2 = with pkgs; [ lazygit ];
 }
