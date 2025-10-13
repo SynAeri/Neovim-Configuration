@@ -38,13 +38,6 @@ nvim_lsp.cssls.setup({
 
 nvim_lsp.rust_analyzer.setup({
   capabilities = capabilities,
-  settings = {
-    ['rust-analyzer'] = {
-      inlayHints = {
-        enable = true
-      },
-    },
-  },
 })
 
 nvim_lsp.jsonls.setup({
