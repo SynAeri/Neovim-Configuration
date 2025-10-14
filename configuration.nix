@@ -93,6 +93,7 @@
   # Networking
   networking.hostName = "nixos";
   networking.networkmanager.enable = true;
+  networking.networkmanager.wifi.powersave = false;
   networking.nameservers = [ "1.1.1.1" "8.8.8.8" ];
   networking.firewall.allowedTCPPorts = [ 3000 22 ];
 
