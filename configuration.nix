@@ -369,7 +369,7 @@
     # Some other stuff to test
     waybar
     dunst
-
+    batsignal
   ];
 
   # NIXOS
