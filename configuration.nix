@@ -368,7 +368,7 @@
 
     # Some other stuff to test
     waybar
-    dunst
+    mako 
     batsignal
     libnotify
   ];
