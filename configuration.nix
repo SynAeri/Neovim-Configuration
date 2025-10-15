@@ -370,6 +370,7 @@
     waybar
     dunst
     batsignal
+    libnotify
   ];
 
   # NIXOS
