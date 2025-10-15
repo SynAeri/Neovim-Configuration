@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, ... }:
 
 {
   imports = [
@@ -350,6 +350,23 @@
     audacity
     file
     gnupg1
+
+    # Hyprland Stuff
+    hyprland
+    hyprpaper # Wallpaper stuff
+    hyprlock # ScreenLock
+    hypridle # Idle Daemon
+
+    # Hyprland utilities 
+    wl-clipboard # Clipboard alternative
+    grim # Replaces some screenshot stuff
+    slurp # Region selection for screenshots
+    wlr-randr # Monitor management which replaces xrandr
+
+    # Some other stuff to test
+    waybar
+    dunst
+
   ];
 
   # NIXOS
@@ -376,5 +393,13 @@
     lidSwitch = "suspend";
     lidSwitchExternalPower = "ignore";
   };
-  # NEOVIM
+
+  # ========================= #
+  # Super Cool Hyprland Setup #
+  # ========================= #
+
+  programs.hyprland = {
+    enable = true;
+    xwayland.enable = true;
+  };
 }
