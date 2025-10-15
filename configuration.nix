@@ -371,7 +371,7 @@
     mako 
     batsignal
     libnotify
-    sway
+    
   ];
 
   # NIXOS
