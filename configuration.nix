@@ -416,12 +416,8 @@
     xwayland.enable = true;
   };
 
-  gtk3 = {
-    enable = true;
-    iconTheme = {
-      name = "Papirus-Dark";  # or "Papirus" for light
-      package = pkgs.papirus-icon-theme;
-    };
+  # Then set it manually
+  environment.variables = {
+    GTK_THEME = "Papirus-Dark";
   };
-
 }
