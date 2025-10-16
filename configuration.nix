@@ -371,6 +371,8 @@
     waybar
     rofi-wayland
     wf-recorder
+    jq
+    ffmpeg
     swaynotificationcenter
     batsignal
     libnotify
