@@ -379,7 +379,7 @@
 
     # Icon theme
     papirus-icon-theme
-    
+    adwaita-gtk-theme 
   ];
 
   # NIXOS
@@ -418,6 +418,6 @@
 
   # Then set it manually
   environment.variables = {
-    GTK_THEME = "Papirus-Dark";
+    GTK_THEME = "Adwaita:dark";
   };
 }
