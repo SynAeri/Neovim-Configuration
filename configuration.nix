@@ -217,7 +217,7 @@
     alacritty
     xterm
     feh
-    rofi
+    
     eww
     polybarFull
 
@@ -368,7 +368,8 @@
 
     # Some other stuff to test
     waybar
-    mako 
+    rofi-wayland
+    swaynotificationcenter
     batsignal
     libnotify
     
