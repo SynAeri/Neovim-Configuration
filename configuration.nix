@@ -218,7 +218,6 @@
     xterm
     feh
     
-    eww
     polybarFull
 
     # Picom Dependencies
