@@ -379,7 +379,7 @@
 
     # Icon theme
     papirus-icon-theme
-    adwaita-gtk-theme 
+    tokyonight-gtk-theme 
   ];
 
   # NIXOS
@@ -416,8 +416,7 @@
     xwayland.enable = true;
   };
 
-  # Then set it manually
   environment.variables = {
-    GTK_THEME = "Adwaita:dark";
+    GTK_THEME = "Tokyonight-Dark";
   };
 }
