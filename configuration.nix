@@ -370,6 +370,7 @@
     # Some other stuff to test
     waybar
     rofi-wayland
+    wf-recorder
     swaynotificationcenter
     batsignal
     libnotify
