@@ -416,7 +416,7 @@
     xwayland.enable = true;
   };
 
-  gtk = {
+  gtk3 = {
     enable = true;
     iconTheme = {
       name = "Papirus-Dark";  # or "Papirus" for light
