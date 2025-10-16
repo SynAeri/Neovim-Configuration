@@ -380,6 +380,7 @@
     # Icon theme
     papirus-icon-theme
     tokyonight-gtk-theme 
+    adwaita-icon-theme
   ];
 
   # NIXOS
