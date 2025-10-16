@@ -376,6 +376,9 @@
     swaynotificationcenter
     batsignal
     libnotify
+
+    # Icon theme
+    papirus-icon-theme
     
   ];
 
@@ -411,6 +414,14 @@
   programs.hyprland = {
     enable = true;
     xwayland.enable = true;
+  };
+
+  gtk = {
+    enable = true;
+    iconTheme = {
+      name = "Papirus-Dark";  # or "Papirus" for light
+      package = pkgs.papirus-icon-theme;
+    };
   };
 
 }
