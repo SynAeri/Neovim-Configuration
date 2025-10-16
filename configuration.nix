@@ -323,6 +323,7 @@
     sumneko-lua-language-server
     clang
     python3
+    pywal
     nodejs # For Node 
     libgccjit # For C
     mono # For C#
