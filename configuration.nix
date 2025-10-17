@@ -359,6 +359,7 @@
     hyprpaper # Wallpaper stuff
     hyprlock # ScreenLock
     hypridle # Idle Daemon
+    nwg-look # Gtk Thingy
 
     # Hyprland utilities 
     wl-clipboard # Clipboard alternative
@@ -405,6 +406,7 @@
   services.logind = {
     lidSwitch = "suspend";
     lidSwitchExternalPower = "ignore";
+
   };
 
   # ========================= #
