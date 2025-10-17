@@ -318,7 +318,7 @@
     alacritty-theme
 
     # File management
-    thunar
+    xfce.thunar
     
     # Programming Languages & LSP
     nil
