@@ -316,6 +316,9 @@
     ripgrep
     traceroute
     alacritty-theme
+
+    # File management
+    thunar
     
     # Programming Languages & LSP
     nil
