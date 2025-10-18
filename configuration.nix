@@ -302,6 +302,7 @@
     btop
     glances
     pipes
+    cataclysm-dda-git
 
     # Graphics
     vulkan-tools
