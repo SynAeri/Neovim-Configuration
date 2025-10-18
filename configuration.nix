@@ -222,7 +222,7 @@
 
     # Picom Dependencies
     pkg-config 
-    picom
+    
     pkgs.libconfig
     ninja
     meson
