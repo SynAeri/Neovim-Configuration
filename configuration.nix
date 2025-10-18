@@ -248,7 +248,7 @@
     pcre2
     uthash
     flatpak
-    flatseal
+    
 
     # Web & Media
     firefox
