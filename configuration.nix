@@ -297,10 +297,11 @@
     mkinitcpio-nfs-utils
     pavucontrol
 
-
-    # Display Manager
-    physlock
+    # CLI COOLSTUFF
     htop
+    btop
+    glances
+    pipes
 
     # Graphics
     vulkan-tools
