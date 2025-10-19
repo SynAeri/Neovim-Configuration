@@ -28,10 +28,8 @@
   boot.loader.systemd-boot.enable = true;
   # boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelPackages = pkgs.linuxPackages_latest;
-  boot.extraModulePackages = with config.boot.kernelPackages; [ ];
   boot.kernelModules = [ 
     "i915"
-    "mt7921u"
   ];
   boot.kernelParams = [
     "i915.enable_psr=0"
@@ -62,11 +60,17 @@
   services.autorandr.enable = true;
 
   # My USB WIFI THINGY
-  # Add a udev rule to automatically switch the device
+  # TP-Link TXE70UH WiFi 6E adapter support
+  boot.extraModulePackages = with config.boot.kernelPackages; [ 
+    rtw89  # This should work with linux_latest kernel
+  ];
+
+  # USB mode switching for the adapter
   services.udev.extraRules = ''
-    # TP-Link Archer TXE70UH - switch from CDROM to WiFi mode
-    ATTR{idVendor}=="0bda", ATTR{idProduct}=="1a2b", RUN+="${pkgs.usb-modeswitch}/bin/usb_modeswitch -v 0bda -p 1a2b -V 0bda -P c820 -M 55534243123456780000000000000011062000000100000000000000000000"
+  # Switch TP-Link TXE70UH from CDROM mode to WiFi mode
+  ATTR{idVendor}=="0bda", ATTR{idProduct}=="1a2b", RUN+="${pkgs.usb-modeswitch}/bin/usb_modeswitch -K -v 0bda -p 1a2b"
   '';
+  services.udev.packages = [ pkgs.usb-modeswitch-data ];
 
   # Hardware & Firmware
   hardware.enableRedistributableFirmware = true;
@@ -308,7 +312,7 @@
     mkinitcpio-nfs-utils
     pavucontrol
     usbutils
-
+    usb-modeswitch
 
     # CLI COOLSTUFF
     htop
