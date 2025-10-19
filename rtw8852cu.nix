@@ -13,20 +13,29 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [ bc nukeReferences ] ++ kernel.moduleBuildDependencies;
 
-  makeFlags = kernel.makeFlags ++ [
-    "KSRC=${kernel.dev}/lib/modules/${kernel.modDirVersion}/build"
-    "USER_MODULE_NAME=8852cu"
-  ];
+  hardeningDisable = [ "pic" "format" ];
+
+  prePatch = ''
+    substituteInPlace Makefile \
+      --replace /lib/modules/ "${kernel.dev}/lib/modules/" \
+      --replace '$(shell uname -r)' "${kernel.modDirVersion}" \
+      --replace /sbin/depmod \# \
+      --replace '$(MODDESTDIR)' "$out/lib/modules/${kernel.modDirVersion}/kernel/drivers/net/wireless/"
+  '';
+
+  makeFlags = [
+    "ARCH=${stdenv.hostPlatform.linuxArch}"
+    ("CONFIG_PLATFORM_I386_PC=" + (if stdenv.hostPlatform.isx86 then "y" else "n"))
+    ("CONFIG_PLATFORM_ARM_RPI=" + (if stdenv.hostPlatform.isAarch then "y" else "n"))
+  ] ++ kernel.makeFlags;
 
   enableParallelBuilding = true;
 
   installPhase = ''
+    runHook preInstall
     mkdir -p $out/lib/modules/${kernel.modDirVersion}/kernel/drivers/net/wireless
     cp 8852cu.ko $out/lib/modules/${kernel.modDirVersion}/kernel/drivers/net/wireless/
-  '';
-
-  postFixup = ''
-    nuke-refs $out/lib/modules/${kernel.modDirVersion}/kernel/drivers/net/wireless/8852cu.ko
+    runHook postInstall
   '';
 
   meta = with lib; {
@@ -34,5 +43,6 @@ stdenv.mkDerivation rec {
     homepage = "https://github.com/morrownr/rtl8852cu-20240510";
     license = licenses.gpl2Only;
     platforms = platforms.linux;
+    broken = kernel.kernelOlder "5.10" || kernel.kernelAtLeast "6.18";
   };
 }
