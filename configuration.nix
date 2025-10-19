@@ -1,5 +1,9 @@
 { config, pkgs, ... }:
 
+let
+  rtw8852cu = config.boot.kernelPackages.callPackage ./rtw8852cu.nix { };
+in
+
 {
   imports = [
     # Include the results of the hardware scan.
@@ -61,6 +65,7 @@
   services.autorandr.enable = true;
 
   # My USB WIFI THINGY
+  boot.extraModulePackages = [ rtw8852cu ];
 
   # USB mode switching for the adapter
   services.udev.extraRules = ''
