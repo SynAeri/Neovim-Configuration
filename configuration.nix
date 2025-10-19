@@ -30,6 +30,7 @@
   boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.kernelModules = [ 
     "i915"
+    "rtw89_8852cu"
   ];
   boot.kernelParams = [
     "i915.enable_psr=0"
@@ -60,10 +61,6 @@
   services.autorandr.enable = true;
 
   # My USB WIFI THINGY
-  # TP-Link TXE70UH WiFi 6E adapter support
-  boot.extraModulePackages = with config.boot.kernelPackages; [ 
-    rtw89  # This should work with linux_latest kernel
-  ];
 
   # USB mode switching for the adapter
   services.udev.extraRules = ''
