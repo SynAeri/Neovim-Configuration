@@ -314,6 +314,7 @@
     # Development Tools
     xorg.xev
     git
+    git-filter-repo
     lazygit
     gnumake
     unzip
