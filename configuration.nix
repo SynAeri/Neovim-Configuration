@@ -296,6 +296,8 @@
     bfg-repo-cleaner
     mkinitcpio-nfs-utils
     pavucontrol
+    usbutils
+
 
     # CLI COOLSTUFF
     htop
