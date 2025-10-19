@@ -15,34 +15,24 @@ stdenv.mkDerivation rec {
 
   hardeningDisable = [ "pic" "format" ];
 
-  prePatch = ''
-    substituteInPlace Makefile \
-      --replace /lib/modules/ "${kernel.dev}/lib/modules/" \
-      --replace '$(shell uname -r)' "${kernel.modDirVersion}" \
-      --replace /sbin/depmod \# \
-      --replace '$(MODDESTDIR)' "$out/lib/modules/${kernel.modDirVersion}/kernel/drivers/net/wireless/"
+  makeFlags = kernel.makeFlags ++ [
+    "KSRC=${kernel.dev}/lib/modules/${kernel.modDirVersion}/build"
+    "KVER=${kernel.modDirVersion}"
+    "MODDESTDIR=$(out)/lib/modules/${kernel.modDirVersion}/kernel/drivers/net/wireless"
+  ];
+
+  preInstall = ''
+    mkdir -p $out/lib/modules/${kernel.modDirVersion}/kernel/drivers/net/wireless
   '';
 
-  makeFlags = [
-    "ARCH=${stdenv.hostPlatform.linuxArch}"
-    ("CONFIG_PLATFORM_I386_PC=" + (if stdenv.hostPlatform.isx86 then "y" else "n"))
-    ("CONFIG_PLATFORM_ARM_RPI=" + (if stdenv.hostPlatform.isAarch then "y" else "n"))
-  ] ++ kernel.makeFlags;
+  installTargets = [ "install" ];
 
   enableParallelBuilding = true;
-
-  installPhase = ''
-    runHook preInstall
-    mkdir -p $out/lib/modules/${kernel.modDirVersion}/kernel/drivers/net/wireless
-    cp 8852cu.ko $out/lib/modules/${kernel.modDirVersion}/kernel/drivers/net/wireless/
-    runHook postInstall
-  '';
 
   meta = with lib; {
     description = "Realtek RTL8852CU/RTL8832CU USB WiFi driver";
     homepage = "https://github.com/morrownr/rtl8852cu-20240510";
     license = licenses.gpl2Only;
     platforms = platforms.linux;
-    broken = kernel.kernelOlder "5.10" || kernel.kernelAtLeast "6.18";
   };
 }
