@@ -1,9 +1,5 @@
 { config, pkgs, ... }:
 
-let
-  rtw8852cu = config.boot.kernelPackages.callPackage ./rtw8852cu.nix { };
-in
-
 {
   imports = [
     # Include the results of the hardware scan.
@@ -34,8 +30,8 @@ in
   boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.kernelModules = [ 
     "i915"
-    "rtw89_8852cu"
   ];
+
   boot.kernelParams = [
     "i915.enable_psr=0"
     "i915.enable_fbc=1"
@@ -65,7 +61,24 @@ in
   services.autorandr.enable = true;
 
   # My USB WIFI THINGY
-  boot.extraModulePackages = [ rtw8852cu ];
+
+
+  # Load the WiFi driver at boot
+  boot.extraModprobeConfig = ''
+  options 8852cu rtw_country_code=US
+  '';
+
+  # Load custom WiFi driver at boot
+  systemd.services.load-8852cu = {
+    description = "Load TP-Link TXE70UH WiFi Driver";
+    wantedBy = [ "multi-user.target" ];
+    after = [ "systemd-modules-load.service" ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.kmod}/bin/insmod /etc/nixos/kernel-modules/8852cu.ko";
+      RemainAfterExit = true;
+    };
+  };
 
   # USB mode switching for the adapter
   services.udev.extraRules = ''
