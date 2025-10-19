@@ -2,13 +2,13 @@
 
 stdenv.mkDerivation rec {
   pname = "rtw8852cu";
-  version = "1.19.2.1-20240510";
+  version = "unstable-2024-12-08";
 
   src = fetchFromGitHub {
     owner = "morrownr";
     repo = "rtl8852cu-20240510";
-    rev = "f9d5fee3f7db06df75dbad06fdc4fc057d3fd990";  # Latest commit as of Dec 2024
-    sha256 = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";  # Will be updated on first build
+    rev = "main";
+    sha256 = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
   };
 
   nativeBuildInputs = [ bc nukeReferences ] ++ kernel.moduleBuildDependencies;
