@@ -2,19 +2,20 @@
 
 stdenv.mkDerivation rec {
   pname = "rtw8852cu";
-  version = "unstable-2024-05-10";
+  version = "1.19.2.1-20240510";
 
   src = fetchFromGitHub {
     owner = "morrownr";
     repo = "rtl8852cu-20240510";
-    rev = "c0a24a91a4e3c60aeb0e5fa6d5aad853d1cdf4e2";
-    sha256 = "sha256-Nj+qRa0C2OAkJR8TtqrvmqDLOLp6GmWwF5/9OhJMD0g=";
+    rev = "f9d5fee3f7db06df75dbad06fdc4fc057d3fd990";  # Latest commit as of Dec 2024
+    sha256 = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";  # Will be updated on first build
   };
 
   nativeBuildInputs = [ bc nukeReferences ] ++ kernel.moduleBuildDependencies;
 
   makeFlags = kernel.makeFlags ++ [
     "KSRC=${kernel.dev}/lib/modules/${kernel.modDirVersion}/build"
+    "USER_MODULE_NAME=8852cu"
   ];
 
   enableParallelBuilding = true;
@@ -29,7 +30,7 @@ stdenv.mkDerivation rec {
   '';
 
   meta = with lib; {
-    description = "Realtek RTL8852CU USB WiFi driver";
+    description = "Realtek RTL8852CU/RTL8832CU USB WiFi driver";
     homepage = "https://github.com/morrownr/rtl8852cu-20240510";
     license = licenses.gpl2Only;
     platforms = platforms.linux;
