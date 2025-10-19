@@ -1,4 +1,4 @@
-{ lib, stdenv, fetchFromGitHub, kernel }:
+{ lib, stdenv, fetchFromGitHub, kernel, bc }:
 
 stdenv.mkDerivation {
   pname = "rtw8852cu";
@@ -11,10 +11,7 @@ stdenv.mkDerivation {
     sha256 = "sha256-yp5e2ijkqKji+dJ+XPMJJPhkjh5NYUiFEncQc4HdNEA=";
   };
 
-  nativeBuildInputs = kernel.moduleBuildDependencies;
-  
-  # The device ID is already in the morrownr repo (added Dec 27, 2024)
-  # Check supported-device-IDs file - 35bc:0102 should be there
+  nativeBuildInputs = kernel.moduleBuildDependencies ++ [ bc ];
   
   buildPhase = ''
     make -C ${kernel.dev}/lib/modules/${kernel.modDirVersion}/build \
