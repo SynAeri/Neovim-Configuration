@@ -61,6 +61,13 @@
   services.flatpak.enable = true;
   services.autorandr.enable = true;
 
+  # My USB WIFI THINGY
+  # Add a udev rule to automatically switch the device
+  services.udev.extraRules = ''
+    # TP-Link Archer TXE70UH - switch from CDROM to WiFi mode
+    ATTR{idVendor}=="0bda", ATTR{idProduct}=="1a2b", RUN+="${pkgs.usb-modeswitch}/bin/usb_modeswitch -v 0bda -p 1a2b -V 0bda -P c820 -M 55534243123456780000000000000011062000000100000000000000000000"
+  '';
+
   # Hardware & Firmware
   hardware.enableRedistributableFirmware = true;
   hardware.enableAllFirmware = true; 
